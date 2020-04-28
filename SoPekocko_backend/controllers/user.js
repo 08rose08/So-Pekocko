@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
+// regex password : /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -16,6 +17,8 @@ exports.signup = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+
+//choose 'RANDOM_TOKEN_SECRET'
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
